@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="jho-home.de" default="html">
+
+	<target name="prepare" unless="done">
+		<property environment="env" />
+		<delete includeemptydirs="true">
+		    <fileset dir = "0_TMP" includes = "**/*"/>
+		    <fileset dir = "0_OUT" includes = "**/*"/>
+		    <fileset dir = "0_HUGO/content" includes = "**/*"/>
+		</delete>
+	</target>
+
+	<target name="copy4hugo" unless="done">
+	    <copy todir="0_HUGO/static/images" overwrite="true">
+			<fileset dir="bilder" includes="*.pdf" />
+			<fileset dir="bilder" includes="*.gif" />
+			<fileset dir="bilder" includes="*.jpg" />
+			<fileset dir="bilder" includes="*.png" />
+			<fileset dir="bilder" includes="*.svg" />
+		</copy>
+	    <copy todir="0_HUGO/static" overwrite="true">
+			<fileset dir="." includes="*.html" />
+		</copy>
+	</target>
+
+	<target name="hugo" depends="prepare" unless="done">
+	    <antcall target="copy4hugo" />
+	    <exec executable="upp" output="0_HUGO/content/_index.md" logError="true">
+		<arg line="-l hugo.lua titelseite.md" />
+	    </exec>
+	    <!-- <mkdir dir = "0_HUGO/content/kapXX" />
+	    <exec executable="upp" output="0_HUGO/content/kap02/_index.pdc" logError="true">
+		<arg line="-l hugo.lua kap02.md" />
+	    </exec>
+	    <apply executable="upp" dest="0_HUGO/content/kap02/" logError="true">
+		<arg line="-l hugo.lua" />
+		<srcfile />
+		<arg line="-o" />
+		<targetfile />
+		<fileset dir="." includes="kap02*.md" excludes="kap02.md" />
+		<mapper type="glob" from="*.md" to="*.pdc" />
+	    </apply> -->
+	    <property name="done" value="done" />
+	</target>
+
+</project>

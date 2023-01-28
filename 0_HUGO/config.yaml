@@ -1,0 +1,43 @@
+baseURL: http://example.org/
+languageCode: en-us
+title: Josh@Home
+theme: gokarna 
+params:
+  showPostsOnHomePage: "recent"
+  author: "Jörg Hofmann"
+security:
+  enableInlineShortcodes: false
+  exec:
+    allow:
+    - ^dart-sass-embedded$
+    - ^go$
+    - ^npx$
+    - ^postcss$
+    - ^pandoc$
+    osEnv:
+    - (?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM)$
+  funcs:
+    getenv:
+    - ^HUGO_
+    - ^CI$
+  http:
+    methods:
+    - (?i)GET|POST
+    urls:
+    - .*
+
+enableRobotsTXT: true
+menu:
+  main:
+    - identifier: "posts"
+      url: "/posts/"
+      name: "Posts"
+      weight: 10
+    - identifier: "tags"
+      name: "Tags"
+      url: "/tags/"
+      weight: 11
+    - identifier: "github"
+      name: "github"
+      url: "https://github.com"
+      weight: 12
